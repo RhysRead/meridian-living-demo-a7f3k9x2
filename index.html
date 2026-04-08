@@ -1,0 +1,2956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meridian Living | Find Your Perfect Home</title>
+    <style>
+        /* ========================================
+           CSS RESET & CUSTOM PROPERTIES
+           ======================================== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            /* Brand colours from Meridian Living identity */
+            --teal-50: #e6f5f5;
+            --teal-100: #b3e0e0;
+            --teal-200: #80cccc;
+            --teal-300: #4db8b8;
+            --teal-400: #1aa3a3;
+            --teal-500: #0A8A8A;
+            --teal-600: #0D6E6E;
+            --teal-700: #0a5c5c;
+            --teal-800: #074a4a;
+            --teal-900: #053838;
+            --gold: #E8A838;
+            --slate-50: #f8fafc;
+            --slate-100: #f1f5f9;
+            --slate-200: #e2e8f0;
+            --slate-300: #cbd5e1;
+            --slate-400: #94a3b8;
+            --slate-500: #64748b;
+            --slate-600: #475569;
+            --slate-700: #334155;
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --font-display: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-body: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--slate-800);
+            line-height: 1.6;
+            background: var(--white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ========================================
+           REDUCED MOTION
+           ======================================== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: box-shadow var(--transition-base);
+            border-bottom: 1px solid transparent;
+        }
+
+        .nav.scrolled {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+            border-bottom-color: var(--slate-100);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--slate-800);
+        }
+
+        .nav-logo svg { flex-shrink: 0; }
+
+        .nav-logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--teal-600);
+        }
+
+        .nav-logo-text span {
+            display: block;
+            font-weight: 300;
+            font-size: 16px;
+            color: #4A4A5A;
+            letter-spacing: 3px;
+            margin-top: -4px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--slate-600);
+            font-size: 15px;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--teal-500);
+            transition: width var(--transition-base);
+            border-radius: 1px;
+        }
+
+        .nav-links a:hover { color: var(--teal-700); }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: var(--teal-600);
+            color: var(--white) !important;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all var(--transition-base);
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-cta:hover {
+            background: var(--teal-700);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(13,148,136,0.3);
+        }
+
+        .nav-cta::after { display: none !important; }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--slate-700);
+            border-radius: 2px;
+            transition: all var(--transition-base);
+        }
+
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            padding: 24px;
+            box-shadow: var(--shadow-lg);
+            z-index: 999;
+        }
+
+        .mobile-menu.active { display: block; }
+
+        .mobile-menu a {
+            display: block;
+            padding: 12px 0;
+            color: var(--slate-700);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            border-bottom: 1px solid var(--slate-100);
+        }
+
+        .mobile-menu .nav-cta {
+            display: block;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background:
+                linear-gradient(135deg, rgba(5,56,56,0.85) 0%, rgba(10,90,90,0.7) 50%, rgba(5,56,56,0.85) 100%),
+                url('../.local/Branding/meridian-banner-1800x360.png') center/cover no-repeat;
+            background-color: var(--teal-900);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(20,184,166,0.15) 0%, transparent 70%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(13,148,136,0.12) 0%, transparent 70%);
+            animation: heroGlow 10s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, -30px) scale(1.1); }
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%);
+        }
+
+        .hero-shapes {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .hero-shape {
+            position: absolute;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
+
+        .hero-shape:nth-child(1) { width: 300px; height: 300px; top: 10%; right: 5%; animation: float 15s ease-in-out infinite; }
+        .hero-shape:nth-child(2) { width: 200px; height: 200px; bottom: 20%; left: 8%; animation: float 12s ease-in-out infinite reverse; }
+        .hero-shape:nth-child(3) { width: 150px; height: 150px; top: 40%; left: 25%; animation: float 18s ease-in-out infinite; border-radius: var(--radius-lg); transform: rotate(45deg); }
+        .hero-shape:nth-child(4) { width: 80px; height: 80px; top: 20%; left: 45%; animation: float 10s ease-in-out infinite reverse; }
+        .hero-shape:nth-child(5) { width: 120px; height: 120px; bottom: 15%; right: 25%; animation: float 14s ease-in-out infinite; border-radius: var(--radius-lg); transform: rotate(30deg); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(10px) rotate(-3deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 120px 24px 80px;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50px;
+            color: var(--teal-200);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards 0.2s;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 7vw, 72px);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.08;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards 0.4s;
+        }
+
+        .hero h1 .accent {
+            background: linear-gradient(135deg, var(--teal-300), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-tagline {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards 0.55s;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: rgba(255,255,255,0.7);
+            max-width: 560px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards 0.6s;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards 0.8s;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            border: none;
+        }
+
+        .hero-btn-primary {
+            background: var(--teal-500);
+            color: var(--white);
+        }
+
+        .hero-btn-primary:hover {
+            background: var(--teal-400);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(20,184,166,0.35);
+        }
+
+        .hero-btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-btn-secondary:hover {
+            background: rgba(255,255,255,0.18);
+            transform: translateY(-2px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s ease-in-out infinite;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 1.2s, bounce 2s ease-in-out infinite 2s;
+        }
+
+        .scroll-indicator svg { color: rgba(255,255,255,0.5); }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        /* ========================================
+           STATS BAR
+           ======================================== */
+        .stats {
+            padding: 60px 24px;
+            background: var(--white);
+            border-bottom: 1px solid var(--slate-100);
+        }
+
+        .stats-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .stat {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .stat.revealed {
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--teal-600);
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 15px;
+            color: var(--slate-500);
+            font-weight: 500;
+        }
+
+        /* ========================================
+           FEATURED DEVELOPMENTS
+           ======================================== */
+        .developments {
+            padding: 100px 24px;
+            background: var(--slate-50);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--teal-600);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 800;
+            color: var(--slate-800);
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 17px;
+            color: var(--slate-500);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .dev-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .dev-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-slow);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .dev-card.revealed {
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .dev-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .dev-card-img {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dev-card:nth-child(1) .dev-card-img {
+            background: linear-gradient(135deg, var(--teal-700), var(--teal-500), var(--teal-300));
+        }
+
+        .dev-card:nth-child(2) .dev-card-img {
+            background: linear-gradient(135deg, var(--slate-700), var(--teal-800), var(--teal-600));
+        }
+
+        .dev-card:nth-child(3) .dev-card-img {
+            background: linear-gradient(135deg, var(--teal-900), var(--slate-800), var(--teal-700));
+        }
+
+        .dev-card-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.06) 40%, rgba(255,255,255,0.06) 60%, transparent 60%),
+                linear-gradient(-45deg, transparent 40%, rgba(255,255,255,0.04) 40%, rgba(255,255,255,0.04) 60%, transparent 60%);
+        }
+
+        .dev-card-img .dev-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            padding: 6px 14px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .dev-card-img .dev-icon {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .dev-card-img .dev-icon svg { color: var(--white); }
+
+        .dev-card-body { padding: 24px; }
+
+        .dev-card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--slate-800);
+            margin-bottom: 8px;
+        }
+
+        .dev-card-desc {
+            font-size: 14px;
+            color: var(--slate-500);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .dev-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dev-card-price {
+            font-size: 13px;
+            color: var(--slate-400);
+        }
+
+        .dev-card-price strong {
+            color: var(--teal-700);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .dev-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--teal-600);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: gap var(--transition-base);
+        }
+
+        .dev-card-link:hover { gap: 10px; }
+
+        /* ========================================
+           ENQUIRY FORM SECTION
+           ======================================== */
+        .form-section {
+            padding: 100px 24px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(170deg, var(--teal-900) 0%, var(--slate-900) 100%);
+        }
+
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(20,184,166,0.1) 0%, transparent 70%);
+        }
+
+        .form-section::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%);
+        }
+
+        .form-section .section-header { position: relative; z-index: 2; }
+        .form-section .section-tag { color: var(--teal-300); }
+        .form-section .section-title { color: var(--white); }
+        .form-section .section-subtitle { color: rgba(255,255,255,0.6); }
+
+        .form-container {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.97);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            overflow: hidden;
+        }
+
+        /* Progress Stepper */
+        .stepper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 40px 24px;
+            gap: 0;
+            background: var(--slate-50);
+            border-bottom: 1px solid var(--slate-100);
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            border: 2px solid var(--slate-200);
+            color: var(--slate-400);
+            background: var(--white);
+            transition: all var(--transition-base);
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .step-circle.active {
+            border-color: var(--teal-500);
+            background: var(--teal-500);
+            color: var(--white);
+            box-shadow: 0 0 0 4px rgba(20,184,166,0.15);
+        }
+
+        .step-circle.completed {
+            border-color: var(--teal-500);
+            background: var(--teal-500);
+            color: var(--white);
+        }
+
+        .step-line {
+            width: 60px;
+            height: 2px;
+            background: var(--slate-200);
+            margin: 0 8px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .step-line-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background: var(--teal-500);
+            transition: width var(--transition-slow);
+        }
+
+        .step-line.filled .step-line-fill { width: 100%; }
+
+        .step-label {
+            display: block;
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--slate-400);
+            white-space: nowrap;
+            transition: color var(--transition-base);
+        }
+
+        .step-circle.active .step-label,
+        .step-circle.completed .step-label { color: var(--teal-600); }
+
+        /* Form Body */
+        .form-body {
+            padding: 48px 40px 32px;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .form-step {
+            display: none;
+            animation: stepFadeIn 0.35s ease;
+        }
+
+        .form-step.active { display: block; }
+
+        @keyframes stepFadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .form-step-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--slate-800);
+            margin-bottom: 6px;
+        }
+
+        .form-step-desc {
+            font-size: 14px;
+            color: var(--slate-400);
+            margin-bottom: 32px;
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-grid .full-width { grid-column: 1 / -1; }
+
+        /* Form Fields */
+        .field-group {
+            position: relative;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-600);
+            margin-bottom: 6px;
+            transition: color var(--transition-fast);
+        }
+
+        .field-group label .required {
+            color: var(--teal-500);
+            margin-left: 2px;
+        }
+
+        .field-group input[type="text"],
+        .field-group input[type="email"],
+        .field-group input[type="tel"],
+        .field-group input[type="date"],
+        .field-group input[type="number"],
+        .field-group select,
+        .field-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid var(--slate-200);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-family: var(--font-body);
+            color: var(--slate-800);
+            background: var(--white);
+            transition: all var(--transition-fast);
+            outline: none;
+        }
+
+        .field-group input:focus,
+        .field-group select:focus,
+        .field-group textarea:focus {
+            border-color: var(--teal-500);
+            box-shadow: 0 0 0 3px rgba(20,184,166,0.1);
+        }
+
+        .field-group input:focus + label,
+        .field-group select:focus + label { color: var(--teal-600); }
+
+        .field-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .field-group input.error,
+        .field-group select.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+        }
+
+        .field-error {
+            font-size: 12px;
+            color: #ef4444;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .field-error.visible { display: block; }
+
+        /* Radio Cards */
+        .radio-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .radio-card {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .radio-card input { position: absolute; opacity: 0; pointer-events: none; }
+
+        .radio-card-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px 12px;
+            border: 2px solid var(--slate-200);
+            border-radius: var(--radius-md);
+            text-align: center;
+            transition: all var(--transition-fast);
+            background: var(--white);
+        }
+
+        .radio-card-inner:hover {
+            border-color: var(--teal-300);
+            background: var(--teal-50);
+        }
+
+        .radio-card input:checked + .radio-card-inner {
+            border-color: var(--teal-500);
+            background: var(--teal-50);
+            box-shadow: 0 0 0 3px rgba(20,184,166,0.12);
+        }
+
+        .radio-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--slate-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--transition-fast);
+        }
+
+        .radio-card input:checked + .radio-card-inner .radio-card-icon {
+            background: var(--teal-100);
+        }
+
+        .radio-card-icon svg { color: var(--slate-500); transition: color var(--transition-fast); }
+        .radio-card input:checked + .radio-card-inner .radio-card-icon svg { color: var(--teal-600); }
+
+        .radio-card-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--slate-700);
+        }
+
+        /* Checkbox Pills */
+        .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pill {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .pill input { position: absolute; opacity: 0; pointer-events: none; }
+
+        .pill-inner {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border: 1.5px solid var(--slate-200);
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--slate-600);
+            transition: all var(--transition-fast);
+            background: var(--white);
+            user-select: none;
+        }
+
+        .pill-inner:hover {
+            border-color: var(--teal-300);
+        }
+
+        .pill input:checked + .pill-inner {
+            border-color: var(--teal-500);
+            background: var(--teal-50);
+            color: var(--teal-700);
+        }
+
+        .pill-check {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1.5px solid var(--slate-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+
+        .pill input:checked + .pill-inner .pill-check {
+            background: var(--teal-500);
+            border-color: var(--teal-500);
+        }
+
+        .pill-check svg { opacity: 0; transition: opacity var(--transition-fast); }
+        .pill input:checked + .pill-inner .pill-check svg { opacity: 1; }
+
+        /* Number Stepper */
+        .stepper-input {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            border: 1.5px solid var(--slate-200);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            width: fit-content;
+        }
+
+        .stepper-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--slate-50);
+            border: none;
+            cursor: pointer;
+            color: var(--slate-600);
+            font-size: 18px;
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+
+        .stepper-btn:hover { background: var(--teal-50); color: var(--teal-600); }
+
+        .stepper-value {
+            width: 50px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--slate-800);
+            border: none;
+            border-left: 1px solid var(--slate-200);
+            border-right: 1px solid var(--slate-200);
+            padding: 8px 0;
+            background: var(--white);
+        }
+
+        /* Price Range */
+        .price-range-container { padding: 8px 0; }
+
+        .price-display {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .price-tag {
+            font-size: 13px;
+            color: var(--slate-500);
+        }
+
+        .price-tag strong {
+            display: block;
+            font-size: 18px;
+            color: var(--teal-700);
+            font-weight: 700;
+        }
+
+        .range-track {
+            position: relative;
+            height: 6px;
+            background: var(--slate-200);
+            border-radius: 3px;
+            margin: 20px 0;
+        }
+
+        .range-fill {
+            position: absolute;
+            height: 100%;
+            background: var(--teal-500);
+            border-radius: 3px;
+            transition: left var(--transition-fast), right var(--transition-fast);
+        }
+
+        .range-track input[type="range"] {
+            position: absolute;
+            top: -8px;
+            width: 100%;
+            height: 22px;
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            pointer-events: none;
+            padding: 0;
+            margin: 0;
+            border: none;
+            box-shadow: none;
+        }
+
+        .range-track input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--teal-500);
+            cursor: pointer;
+            pointer-events: all;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .range-track input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 2px 8px rgba(13,148,136,0.3);
+        }
+
+        .range-track input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--teal-500);
+            cursor: pointer;
+            pointer-events: all;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+
+        /* Toggle Switch */
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border: 1.5px solid var(--slate-200);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .toggle-group:hover { border-color: var(--teal-300); }
+
+        .toggle-label-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--slate-700);
+        }
+
+        .toggle {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .toggle input { position: absolute; opacity: 0; pointer-events: none; }
+
+        .toggle-track {
+            position: absolute;
+            inset: 0;
+            background: var(--slate-200);
+            border-radius: 13px;
+            transition: background var(--transition-base);
+            cursor: pointer;
+        }
+
+        .toggle-track::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: var(--white);
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            transition: transform var(--transition-base);
+        }
+
+        .toggle input:checked + .toggle-track {
+            background: var(--teal-500);
+        }
+
+        .toggle input:checked + .toggle-track::after {
+            transform: translateX(22px);
+        }
+
+        /* Timeframe Radio Cards */
+        .timeframe-cards {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .timeframe-card {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .timeframe-card input { position: absolute; opacity: 0; pointer-events: none; }
+
+        .timeframe-card-inner {
+            padding: 14px 8px;
+            border: 1.5px solid var(--slate-200);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--slate-600);
+            transition: all var(--transition-fast);
+            background: var(--white);
+        }
+
+        .timeframe-card-inner:hover { border-color: var(--teal-300); }
+
+        .timeframe-card input:checked + .timeframe-card-inner {
+            border-color: var(--teal-500);
+            background: var(--teal-50);
+            color: var(--teal-700);
+        }
+
+        /* Form Navigation */
+        .form-nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 24px 40px 32px;
+            border-top: 1px solid var(--slate-100);
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--white);
+            border: 1.5px solid var(--slate-200);
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--slate-600);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-family: var(--font-body);
+        }
+
+        .btn-back:hover {
+            border-color: var(--slate-300);
+            color: var(--slate-700);
+        }
+
+        .btn-next {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 32px;
+            background: var(--teal-600);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            font-family: var(--font-body);
+            margin-left: auto;
+        }
+
+        .btn-next:hover {
+            background: var(--teal-700);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(13,148,136,0.3);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-submit {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 16px 32px;
+            background: var(--teal-600);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            font-family: var(--font-body);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit:hover {
+            background: var(--teal-700);
+            box-shadow: 0 4px 12px rgba(13,148,136,0.3);
+        }
+
+        .btn-submit.loading {
+            pointer-events: none;
+            color: transparent;
+        }
+
+        .btn-submit .spinner {
+            position: absolute;
+            display: none;
+        }
+
+        .btn-submit.loading .spinner { display: block; }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Review Step */
+        .review-section {
+            margin-bottom: 24px;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--slate-100);
+        }
+
+        .review-header h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--teal-700);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .review-edit {
+            font-size: 13px;
+            color: var(--teal-600);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: color var(--transition-fast);
+            font-family: var(--font-body);
+        }
+
+        .review-edit:hover { color: var(--teal-800); }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
+        }
+
+        .review-item {
+            padding: 6px 0;
+        }
+
+        .review-item-label {
+            font-size: 12px;
+            color: var(--slate-400);
+            margin-bottom: 2px;
+        }
+
+        .review-item-value {
+            font-size: 14px;
+            color: var(--slate-800);
+            font-weight: 500;
+        }
+
+        .terms-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 24px 0;
+            cursor: pointer;
+        }
+
+        .terms-check input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: var(--teal-600);
+            flex-shrink: 0;
+        }
+
+        .terms-check span {
+            font-size: 13px;
+            color: var(--slate-500);
+            line-height: 1.5;
+        }
+
+        .terms-check a { color: var(--teal-600); text-decoration: underline; }
+
+        /* Success State */
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .success-state.active { display: block; }
+
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+        }
+
+        .success-checkmark circle {
+            fill: none;
+            stroke: var(--teal-500);
+            stroke-width: 2;
+            stroke-dasharray: 251;
+            stroke-dashoffset: 251;
+            animation: drawCircle 0.6s ease forwards;
+        }
+
+        .success-checkmark path {
+            fill: none;
+            stroke: var(--teal-500);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: drawCheck 0.4s ease forwards 0.5s;
+        }
+
+        @keyframes drawCircle {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes drawCheck {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .success-state h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--slate-800);
+            margin-bottom: 12px;
+        }
+
+        .success-state p {
+            font-size: 16px;
+            color: var(--slate-500);
+            margin-bottom: 32px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        /* ========================================
+           TESTIMONIALS
+           ======================================== */
+        .testimonials {
+            padding: 100px 24px;
+            background: var(--white);
+        }
+
+        .testimonial-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .testimonial-card {
+            background: var(--slate-50);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: transform var(--transition-slow);
+        }
+
+        .testimonial-card.revealed { animation: fadeUp 0.6s ease forwards; }
+
+        .testimonial-card:hover { transform: translateY(-4px); }
+
+        .testimonial-quote {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            font-size: 60px;
+            font-weight: 800;
+            color: var(--teal-100);
+            line-height: 1;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-stars svg { color: #E8A838; }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: var(--slate-600);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--slate-800);
+        }
+
+        .testimonial-role {
+            font-size: 13px;
+            color: var(--slate-400);
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .footer {
+            background: var(--slate-900);
+            color: var(--slate-300);
+            padding: 80px 24px 0;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            padding-bottom: 48px;
+        }
+
+        .footer-brand {
+            max-width: 280px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .footer-logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--teal-400);
+        }
+
+        .footer-logo-text span {
+            display: block;
+            font-weight: 300;
+            font-size: 15px;
+            color: var(--slate-400);
+            letter-spacing: 3px;
+            margin-top: -3px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--slate-400);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--slate-400);
+            transition: all var(--transition-fast);
+            text-decoration: none;
+        }
+
+        .footer-social a:hover {
+            background: var(--teal-600);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .footer-col h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul { list-style: none; }
+
+        .footer-col li { margin-bottom: 10px; }
+
+        .footer-col a {
+            color: var(--slate-400);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color var(--transition-fast);
+        }
+
+        .footer-col a:hover { color: var(--teal-400); }
+
+        .footer-col address {
+            font-style: normal;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--slate-400);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 24px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--slate-500);
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+            .dev-grid { grid-template-columns: repeat(2, 1fr); }
+            .dev-card:nth-child(3) { grid-column: 1 / -1; }
+            .testimonial-grid { grid-template-columns: 1fr; max-width: 600px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .timeframe-cards { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            .hero h1 { letter-spacing: -1px; }
+            .hero-content { padding: 100px 20px 60px; }
+
+            .stats-inner { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+            .stat-number { font-size: 32px; }
+
+            .dev-grid { grid-template-columns: 1fr; }
+            .dev-card:nth-child(3) { grid-column: auto; }
+            .dev-card-img { height: 180px; }
+
+            .form-body { padding: 32px 20px 24px; }
+            .form-nav { padding: 20px 20px 24px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .radio-cards { grid-template-columns: 1fr; }
+            .timeframe-cards { grid-template-columns: repeat(2, 1fr); }
+            .stepper { padding: 24px 16px 24px; gap: 0; }
+            .step-line { width: 30px; }
+            .step-label { font-size: 9px; }
+            .review-grid { grid-template-columns: 1fr; }
+
+            .testimonial-grid { grid-template-columns: 1fr; }
+
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .hero-btn { width: 100%; justify-content: center; }
+            .price-display { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========================================
+         NAVIGATION
+         ======================================== -->
+    <nav class="nav" id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <svg width="44" height="32" viewBox="20 45 180 85" fill="none">
+                    <defs><linearGradient id="navRoofGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0A8A8A"/><stop offset="100%" style="stop-color:#0D6E6E"/></linearGradient></defs>
+                    <path d="M 30 120 L 80 55 L 130 120" fill="none" stroke="url(#navRoofGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M 90 120 L 140 55 L 190 120" fill="none" stroke="url(#navRoofGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+                    <rect x="101" y="88" width="18" height="28" rx="2" fill="#E8A838" opacity="0.9"/>
+                </svg>
+                <div class="nav-logo-text">meridian<span>living</span></div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#developments">Developments</a></li>
+                <li><a href="#properties">Properties</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#enquiry-form" class="nav-cta">Register Interest</a></li>
+            </ul>
+
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#developments">Developments</a>
+        <a href="#properties">Properties</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#enquiry-form" class="nav-cta">Register Interest</a>
+    </div>
+
+    <!-- ========================================
+         HERO SECTION
+         ======================================== -->
+    <section class="hero" id="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-shapes">
+            <div class="hero-shape"></div>
+            <div class="hero-shape"></div>
+            <div class="hero-shape"></div>
+            <div class="hero-shape"></div>
+            <div class="hero-shape"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Award-Winning Homes
+            </div>
+            <h1>Find Your<br><span class="accent">Perfect Home</span></h1>
+            <p class="hero-tagline"><em>where you belong.</em></p>
+            <p>Meridian Living brings you exceptional new-build homes across the UK. From first-time buyers to growing families, discover your next chapter.</p>
+            <div class="hero-buttons">
+                <a href="#enquiry-form" class="hero-btn hero-btn-primary">
+                    Register Your Interest
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#developments" class="hero-btn hero-btn-secondary">
+                    View Developments
+                </a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        </div>
+    </section>
+
+    <!-- ========================================
+         STATS BAR
+         ======================================== -->
+    <section class="stats" id="stats">
+        <div class="stats-inner">
+            <div class="stat" data-reveal>
+                <div class="stat-number" data-count="500" data-suffix="+">0</div>
+                <div class="stat-label">Properties Sold</div>
+            </div>
+            <div class="stat" data-reveal>
+                <div class="stat-number" data-count="50" data-suffix="+">0</div>
+                <div class="stat-label">Developments</div>
+            </div>
+            <div class="stat" data-reveal>
+                <div class="stat-number" data-count="98" data-suffix="%">0</div>
+                <div class="stat-label">Customer Satisfaction</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FEATURED DEVELOPMENTS
+         ======================================== -->
+    <section class="developments" id="developments">
+        <div class="section-header">
+            <div class="section-tag">Featured Developments</div>
+            <h2 class="section-title">Exceptional Homes, Exceptional Locations</h2>
+            <p class="section-subtitle">Discover our latest developments, each thoughtfully designed for modern living.</p>
+        </div>
+
+        <div class="dev-grid">
+            <div class="dev-card" data-reveal>
+                <div class="dev-card-img">
+                    <span class="dev-badge">Now Selling</span>
+                    <div class="dev-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                </div>
+                <div class="dev-card-body">
+                    <h3 class="dev-card-title">Moderna Collection</h3>
+                    <p class="dev-card-desc">Contemporary living in the heart of the West Midlands. Beautifully appointed 2-5 bedroom homes.</p>
+                    <div class="dev-card-footer">
+                        <div class="dev-card-price">Starting from <br><strong>&pound;285,000</strong></div>
+                        <a href="#" class="dev-card-link">
+                            View
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dev-card" data-reveal>
+                <div class="dev-card-img">
+                    <span class="dev-badge">Coming Soon</span>
+                    <div class="dev-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a4 4 0 00-8 0v2"/></svg>
+                    </div>
+                </div>
+                <div class="dev-card-body">
+                    <h3 class="dev-card-title">Riverside Quarter</h3>
+                    <p class="dev-card-desc">Waterfront apartments with stunning canal views. Modern 1-3 bedroom apartments in the city centre.</p>
+                    <div class="dev-card-footer">
+                        <div class="dev-card-price">Starting from <br><strong>&pound;195,000</strong></div>
+                        <a href="#" class="dev-card-link">
+                            View
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dev-card" data-reveal>
+                <div class="dev-card-img">
+                    <span class="dev-badge">Final Phase</span>
+                    <div class="dev-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                    </div>
+                </div>
+                <div class="dev-card-body">
+                    <h3 class="dev-card-title">Oakwood Gardens</h3>
+                    <p class="dev-card-desc">Family homes surrounded by nature. Spacious 3-5 bedroom detached houses with generous gardens.</p>
+                    <div class="dev-card-footer">
+                        <div class="dev-card-price">Starting from <br><strong>&pound;425,000</strong></div>
+                        <a href="#" class="dev-card-link">
+                            View
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         ENQUIRY FORM
+         ======================================== -->
+    <section class="form-section" id="enquiry-form">
+        <div class="section-header">
+            <div class="section-tag">Get In Touch</div>
+            <h2 class="section-title">Register Your Interest</h2>
+            <p class="section-subtitle">Tell us what you're looking for and we'll help you find your perfect home.</p>
+        </div>
+
+        <div class="form-container" id="formContainer">
+            <!-- Progress Stepper -->
+            <div class="stepper" id="stepper">
+                <div class="step-item">
+                    <div class="step-circle active" data-step="1">
+                        1
+                        <span class="step-label">About You</span>
+                    </div>
+                </div>
+                <div class="step-line" id="line-1"><div class="step-line-fill"></div></div>
+                <div class="step-item">
+                    <div class="step-circle" data-step="2">
+                        2
+                        <span class="step-label">Requirements</span>
+                    </div>
+                </div>
+                <div class="step-line" id="line-2"><div class="step-line-fill"></div></div>
+                <div class="step-item">
+                    <div class="step-circle" data-step="3">
+                        3
+                        <span class="step-label">Situation</span>
+                    </div>
+                </div>
+                <div class="step-line" id="line-3"><div class="step-line-fill"></div></div>
+                <div class="step-item">
+                    <div class="step-circle" data-step="4">
+                        4
+                        <span class="step-label">Review</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form id="leadForm" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DdL00000o7KMz" method="POST">
+                <input type="hidden" name="oid" value="00DdL00000o7KMz">
+                <input type="hidden" name="retURL" value="" id="retURL">
+                <!-- Country defaults to GB -->
+                <input type="hidden" name="country_code" value="GB">
+                <input type="hidden" name="lead_source" value="Web">
+
+                <!-- STEP 1: About You -->
+                <div class="form-body">
+                    <div class="form-step active" id="step-1">
+                        <h3 class="form-step-title">About You</h3>
+                        <p class="form-step-desc">Let's start with your basic details so we can get in touch.</p>
+
+                        <div class="form-grid">
+                            <div class="field-group">
+                                <label for="first_name">First Name <span class="required">*</span></label>
+                                <input type="text" id="first_name" name="first_name" maxlength="40" required placeholder="e.g. Sarah">
+                                <div class="field-error" id="err-first_name">Please enter your first name</div>
+                            </div>
+                            <div class="field-group">
+                                <label for="last_name">Last Name <span class="required">*</span></label>
+                                <input type="text" id="last_name" name="last_name" maxlength="80" required placeholder="e.g. Thompson">
+                                <div class="field-error" id="err-last_name">Please enter your last name</div>
+                            </div>
+                            <div class="field-group">
+                                <label for="email">Email Address <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" maxlength="80" required placeholder="e.g. sarah@example.com">
+                                <div class="field-error" id="err-email">Please enter a valid email address</div>
+                            </div>
+                            <div class="field-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" maxlength="40" placeholder="e.g. 07700 900000">
+                            </div>
+                            <!-- Company is required by Web-to-Lead but not relevant for residential enquiries -->
+                            <input type="hidden" id="company" name="company" value="N/A">
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027Ttr4' with field ID from Web-to-Lead setup, e.g. '00NdL000005XXXX' -->
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="00NdL000027Ttr4">
+                                    <option value="">Select...</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Non-Binary">Non-Binary</option>
+                                    <option value="Prefer Not to Say">Prefer Not to Say</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027Ttqz' with field ID from Web-to-Lead setup -->
+                                <label for="age_band">Age Band</label>
+                                <select id="age_band" name="00NdL000027Ttqz">
+                                    <option value="">Select...</option>
+                                    <option value="18-25">18-25</option>
+                                    <option value="26-35">26-35</option>
+                                    <option value="36-45">36-45</option>
+                                    <option value="46-55">46-55</option>
+                                    <option value="56-65">56-65</option>
+                                    <option value="65+">65+</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027Ttr5' with field ID from Web-to-Lead setup -->
+                                <label for="marital_status">Marital Status</label>
+                                <select id="marital_status" name="00NdL000027Ttr5">
+                                    <option value="">Select...</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Civil Partnership">Civil Partnership</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Widowed">Widowed</option>
+                                </select>
+                            </div>
+                            <div class="field-group full-width">
+                                <!-- Replace '00NdL000027Ttr8' with field ID from Web-to-Lead setup -->
+                                <label for="nationality">Nationality</label>
+                                <input type="text" id="nationality" name="00NdL000027Ttr8" maxlength="100" placeholder="e.g. British">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Property Requirements -->
+                    <div class="form-step" id="step-2">
+                        <h3 class="form-step-title">Property Requirements</h3>
+                        <p class="form-step-desc">Tell us what kind of property you're looking for.</p>
+
+                        <div class="form-grid">
+                            <!-- Purchase Interest -->
+                            <div class="field-group full-width">
+                                <!-- Replace '00NdL000027TtrB' with field ID from Web-to-Lead setup -->
+                                <label>What are you interested in? <span class="required">*</span></label>
+                                <div class="radio-cards">
+                                    <label class="radio-card">
+                                        <input type="radio" name="00NdL000027TtrB" value="Sale" required>
+                                        <div class="radio-card-inner">
+                                            <div class="radio-card-icon">
+                                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                                            </div>
+                                            <span class="radio-card-label">Buying</span>
+                                        </div>
+                                    </label>
+                                    <label class="radio-card">
+                                        <input type="radio" name="00NdL000027TtrB" value="Letting">
+                                        <div class="radio-card-inner">
+                                            <div class="radio-card-icon">
+                                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                                            </div>
+                                            <span class="radio-card-label">Renting</span>
+                                        </div>
+                                    </label>
+                                    <label class="radio-card">
+                                        <input type="radio" name="00NdL000027TtrB" value="Shared Ownership">
+                                        <div class="radio-card-inner">
+                                            <div class="radio-card-icon">
+                                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                                            </div>
+                                            <span class="radio-card-label">Shared Ownership</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="field-error" id="err-purchase_interest">Please select your interest</div>
+                            </div>
+
+                            <!-- Property Type -->
+                            <div class="field-group full-width">
+                                <!-- Replace '00NdL000027TtrA' with field ID from Web-to-Lead setup (multiselect, semicolon-separated) -->
+                                <label>Property Type</label>
+                                <div class="pill-group" id="propertyTypePills">
+                                    <label class="pill">
+                                        <input type="checkbox" value="Apartment">
+                                        <span class="pill-inner">
+                                            <span class="pill-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                            Apartment
+                                        </span>
+                                    </label>
+                                    <label class="pill">
+                                        <input type="checkbox" value="Detached">
+                                        <span class="pill-inner">
+                                            <span class="pill-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                            Detached
+                                        </span>
+                                    </label>
+                                    <label class="pill">
+                                        <input type="checkbox" value="Semi-Detached">
+                                        <span class="pill-inner">
+                                            <span class="pill-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                            Semi-Detached
+                                        </span>
+                                    </label>
+                                    <label class="pill">
+                                        <input type="checkbox" value="Terraced">
+                                        <span class="pill-inner">
+                                            <span class="pill-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+                                            Terraced
+                                        </span>
+                                    </label>
+                                </div>
+                                <!-- Hidden input to collect multiselect values -->
+                                <input type="hidden" name="00NdL000027TtrA" id="propertyTypeHidden">
+                            </div>
+
+                            <!-- Bedrooms -->
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027VYA6' with field ID from Web-to-Lead setup -->
+                                <label>Minimum Bedrooms</label>
+                                <div class="stepper-input">
+                                    <button type="button" class="stepper-btn" onclick="adjustStepper('minBeds', -1)">-</button>
+                                    <input type="text" class="stepper-value" id="minBeds" name="00NdL000027VYA6" value="1" readonly>
+                                    <button type="button" class="stepper-btn" onclick="adjustStepper('minBeds', 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027VYA5' with field ID from Web-to-Lead setup -->
+                                <label>Maximum Bedrooms</label>
+                                <div class="stepper-input">
+                                    <button type="button" class="stepper-btn" onclick="adjustStepper('maxBeds', -1)">-</button>
+                                    <input type="text" class="stepper-value" id="maxBeds" name="00NdL000027VYA5" value="3" readonly>
+                                    <button type="button" class="stepper-btn" onclick="adjustStepper('maxBeds', 1)">+</button>
+                                </div>
+                            </div>
+
+                            <!-- Price Range -->
+                            <div class="field-group full-width">
+                                <label>Price Range</label>
+                                <div class="price-range-container">
+                                    <div class="price-display">
+                                        <div class="price-tag">Min Price<br><strong id="minPriceDisplay">&pound;100,000</strong></div>
+                                        <div class="price-tag" style="text-align:right">Max Price<br><strong id="maxPriceDisplay">&pound;500,000</strong></div>
+                                    </div>
+                                    <div class="range-track">
+                                        <div class="range-fill" id="rangeFill"></div>
+                                        <!-- Replace '00NdL000027Ttr7' with field ID from Web-to-Lead setup -->
+                                        <input type="range" id="minPrice" name="00NdL000027Ttr7" min="50000" max="2000000" step="25000" value="100000">
+                                        <!-- Replace '00NdL000027Ttr6' with field ID from Web-to-Lead setup -->
+                                        <input type="range" id="maxPrice" name="00NdL000027Ttr6" min="50000" max="2000000" step="25000" value="500000">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tenure -->
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027VYA9' with field ID from Web-to-Lead setup -->
+                                <label for="preferred_tenure">Preferred Tenure</label>
+                                <select id="preferred_tenure" name="00NdL000027VYA9">
+                                    <option value="">No Preference</option>
+                                    <option value="Freehold">Freehold</option>
+                                    <option value="Leasehold">Leasehold</option>
+                                </select>
+                            </div>
+
+                            <!-- Move-In Date -->
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027VYA8' with field ID from Web-to-Lead setup -->
+                                <label for="move_in_date">Ideal Move-In Date</label>
+                                <input type="date" id="move_in_date" name="00NdL000027VYA8">
+                            </div>
+
+                            <!-- Garden Required -->
+                            <div class="field-group full-width">
+                                <!-- Replace '00NdL000027VYA3' with field ID from Web-to-Lead setup -->
+                                <label class="toggle-group" for="garden_required">
+                                    <span class="toggle-label-text">Garden Required</span>
+                                    <div class="toggle">
+                                        <input type="checkbox" id="garden_required" name="00NdL000027VYA3" value="1">
+                                        <div class="toggle-track"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Your Situation -->
+                    <div class="form-step" id="step-3">
+                        <h3 class="form-step-title">Your Situation</h3>
+                        <p class="form-step-desc">Help us understand your current position so we can best assist you.</p>
+
+                        <div class="form-grid">
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027VYA2' with field ID from Web-to-Lead setup -->
+                                <label for="current_situation">Current Situation</label>
+                                <select id="current_situation" name="00NdL000027VYA2">
+                                    <option value="">Select...</option>
+                                    <option value="First Time Buyer">First Time Buyer</option>
+                                    <option value="Own Home - No Chain">Own Home - No Chain</option>
+                                    <option value="Own Home - Chain">Own Home - Chain</option>
+                                    <option value="Renting">Renting</option>
+                                    <option value="Living with Family">Living with Family</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027TtrC' with field ID from Web-to-Lead setup -->
+                                <label for="selling_position">Selling Position</label>
+                                <select id="selling_position" name="00NdL000027TtrC">
+                                    <option value="">Select...</option>
+                                    <option value="First Time Buyer">First Time Buyer</option>
+                                    <option value="Chain">Chain</option>
+                                    <option value="No Chain">No Chain</option>
+                                    <option value="Under Offer">Under Offer</option>
+                                    <option value="Sold STC">Sold STC</option>
+                                </select>
+                            </div>
+                            <div class="field-group full-width">
+                                <!-- Replace '00NdL000027Ttr2' with field ID from Web-to-Lead setup -->
+                                <label for="buying_position">Buying Position</label>
+                                <input type="text" id="buying_position" name="00NdL000027Ttr2" maxlength="255" placeholder="Describe your current buying position">
+                            </div>
+
+                            <!-- Toggles -->
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027VYA7' with field ID from Web-to-Lead setup -->
+                                <label class="toggle-group" for="mortgage_pre_approved">
+                                    <span class="toggle-label-text">Mortgage Pre-Approved</span>
+                                    <div class="toggle">
+                                        <input type="checkbox" id="mortgage_pre_approved" name="00NdL000027VYA7" value="1">
+                                        <div class="toggle-track"></div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027VYA1' with field ID from Web-to-Lead setup -->
+                                <label class="toggle-group" for="budget_confirmed">
+                                    <span class="toggle-label-text">Budget Confirmed</span>
+                                    <div class="toggle">
+                                        <input type="checkbox" id="budget_confirmed" name="00NdL000027VYA1" value="1">
+                                        <div class="toggle-track"></div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Timeframe -->
+                            <div class="field-group full-width">
+                                <!-- Replace '00NdL000027VYAB' with field ID from Web-to-Lead setup -->
+                                <label>Timeframe</label>
+                                <div class="timeframe-cards">
+                                    <label class="timeframe-card">
+                                        <input type="radio" name="00NdL000027VYAB" value="Urgent">
+                                        <div class="timeframe-card-inner">Urgent</div>
+                                    </label>
+                                    <label class="timeframe-card">
+                                        <input type="radio" name="00NdL000027VYAB" value="1-3 Months">
+                                        <div class="timeframe-card-inner">1-3 Months</div>
+                                    </label>
+                                    <label class="timeframe-card">
+                                        <input type="radio" name="00NdL000027VYAB" value="3-6 Months">
+                                        <div class="timeframe-card-inner">3-6 Months</div>
+                                    </label>
+                                    <label class="timeframe-card">
+                                        <input type="radio" name="00NdL000027VYAB" value="6-12 Months">
+                                        <div class="timeframe-card-inner">6-12 Months</div>
+                                    </label>
+                                    <label class="timeframe-card">
+                                        <input type="radio" name="00NdL000027VYAB" value="12+ Months">
+                                        <div class="timeframe-card-inner">12+ Months</div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="field-group">
+                                <label for="city">Preferred City / Area</label>
+                                <input type="text" id="city" name="city" maxlength="40" placeholder="e.g. Birmingham">
+                            </div>
+                            <div class="field-group">
+                                <!-- Replace '00NdL000027VYAA' with field ID from Web-to-Lead setup -->
+                                <label for="source_detail">How did you hear about us?</label>
+                                <input type="text" id="source_detail" name="00NdL000027VYAA" maxlength="255" placeholder="e.g. Google, Rightmove, Referral">
+                            </div>
+                            <div class="field-group full-width">
+                                <label for="description">Additional Notes</label>
+                                <textarea id="description" name="description" placeholder="Anything else you'd like us to know? Specific developments, special requirements, questions..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Review & Submit -->
+                    <div class="form-step" id="step-4">
+                        <h3 class="form-step-title">Review Your Details</h3>
+                        <p class="form-step-desc">Please check everything looks correct before submitting.</p>
+
+                        <div id="reviewContent"></div>
+
+                        <label class="terms-check">
+                            <input type="checkbox" id="termsCheck" required>
+                            <span>I agree to the <a href="#">Privacy Policy</a> and consent to Meridian Living contacting me about properties matching my requirements. I understand I can unsubscribe at any time.</span>
+                        </label>
+
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            Submit Enquiry
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            <div class="spinner"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Form Navigation -->
+                <div class="form-nav" id="formNav">
+                    <button type="button" class="btn-back" id="btnBack" style="visibility:hidden" onclick="navigateStep(-1)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        Back
+                    </button>
+                    <button type="button" class="btn-next" id="btnNext" onclick="navigateStep(1)">
+                        Continue
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Success State -->
+            <div class="success-state" id="successState">
+                <svg class="success-checkmark" viewBox="0 0 80 80">
+                    <circle cx="40" cy="40" r="38"/>
+                    <path d="M24 42l10 10 22-24"/>
+                </svg>
+                <h2>Thank You!</h2>
+                <p>We've received your enquiry and one of our team will be in touch within 24 hours.</p>
+                <a href="#hero" class="hero-btn hero-btn-primary" onclick="resetForm()" style="display:inline-flex">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         TESTIMONIALS
+         ======================================== -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <div class="section-tag">What Our Customers Say</div>
+            <h2 class="section-title">Trusted by Homeowners Across the UK</h2>
+            <p class="section-subtitle">Hear from some of the families who found their dream home with us.</p>
+        </div>
+
+        <div class="testimonial-grid">
+            <div class="testimonial-card" data-reveal>
+                <div class="testimonial-quote">&ldquo;</div>
+                <div class="testimonial-stars">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-text">Meridian Living made buying our first home effortless. The team guided us every step of the way, from reservation right through to getting the keys. We couldn't be happier.</p>
+                <div class="testimonial-author">Sarah &amp; James T.</div>
+                <div class="testimonial-role">First Time Buyers, Moderna Collection</div>
+            </div>
+
+            <div class="testimonial-card" data-reveal>
+                <div class="testimonial-quote">&ldquo;</div>
+                <div class="testimonial-stars">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-text">Exceptional quality homes and outstanding customer service throughout. The attention to detail in the build quality really sets Meridian Living apart from other developers.</p>
+                <div class="testimonial-author">David M.</div>
+                <div class="testimonial-role">Homeowner, Riverside Quarter</div>
+            </div>
+
+            <div class="testimonial-card" data-reveal>
+                <div class="testimonial-quote">&ldquo;</div>
+                <div class="testimonial-stars">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="testimonial-text">From reservation to completion, the whole process was smooth and professional. The shared ownership scheme made homeownership a reality for us. Truly life-changing.</p>
+                <div class="testimonial-author">Emma R.</div>
+                <div class="testimonial-role">Shared Ownership, Oakwood Gardens</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+         ======================================== -->
+    <footer class="footer" id="contact">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="footer-logo">
+                    <svg width="40" height="28" viewBox="20 45 180 85" fill="none">
+                        <defs><linearGradient id="footRoofGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1aa3a3"/><stop offset="100%" style="stop-color:#0A8A8A"/></linearGradient></defs>
+                        <path d="M 30 120 L 80 55 L 130 120" fill="none" stroke="url(#footRoofGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M 90 120 L 140 55 L 190 120" fill="none" stroke="url(#footRoofGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+                        <rect x="101" y="88" width="18" height="28" rx="2" fill="#E8A838" opacity="0.9"/>
+                    </svg>
+                    <div class="footer-logo-text">meridian<span>living</span></div>
+                </a>
+                <p>Building exceptional homes and communities across the United Kingdom. Quality craftsmanship, sustainable design, and outstanding customer service since 2015.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="#" aria-label="X (Twitter)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Developments</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">News &amp; Blog</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="#">Buying Guide</a></li>
+                    <li><a href="#">Shared Ownership</a></li>
+                    <li><a href="#">Part Exchange</a></li>
+                    <li><a href="#">Help to Buy</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <address>
+                    Meridian Living Ltd<br>
+                    15 Victoria Square<br>
+                    Birmingham, B1 1BD<br><br>
+                    <a href="tel:+441211234567">0121 123 4567</a><br>
+                    <a href="mailto:hello@meridianliving.co.uk">hello@meridianliving.co.uk</a>
+                </address>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>&copy; 2026 Meridian Living. All rights reserved.</span>
+            <span>
+                <a href="#">Privacy Policy</a> &middot;
+                <a href="#">Terms of Use</a> &middot;
+                <a href="#">Cookie Policy</a>
+            </span>
+        </div>
+    </footer>
+
+    <!-- Confetti container (injected by JS) -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- ========================================
+         JAVASCRIPT
+         ======================================== -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ---- NAV SCROLL ----
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }, { passive: true });
+
+        // ---- HAMBURGER MENU ----
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // ---- SCROLL REVEAL ----
+        const revealElements = document.querySelectorAll('[data-reveal]');
+        const revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    // Stagger children
+                    var delay = Array.from(entry.target.parentElement.children).indexOf(entry.target) * 150;
+                    entry.target.style.animationDelay = delay + 'ms';
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(function(el) { revealObserver.observe(el); });
+
+        // ---- STATS COUNTER ----
+        var statsCounted = false;
+        var statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting && !statsCounted) {
+                    statsCounted = true;
+                    document.querySelectorAll('.stat-number').forEach(function(el) {
+                        animateCounter(el);
+                    });
+                    // Also reveal stat elements
+                    document.querySelectorAll('.stat').forEach(function(el, i) {
+                        setTimeout(function() { el.classList.add('revealed'); }, i * 200);
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+
+        var statsSection = document.getElementById('stats');
+        if (statsSection) statsObserver.observe(statsSection);
+
+        function animateCounter(el) {
+            var target = parseInt(el.getAttribute('data-count'));
+            var suffix = el.getAttribute('data-suffix') || '';
+            var duration = 2000;
+            var start = 0;
+            var startTime = null;
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                var progress = Math.min((timestamp - startTime) / duration, 1);
+                // Ease out cubic
+                var eased = 1 - Math.pow(1 - progress, 3);
+                var current = Math.floor(eased * target);
+                el.textContent = current.toLocaleString() + suffix;
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    el.textContent = target.toLocaleString() + suffix;
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        // ---- FORM WIZARD ----
+        var currentStep = 1;
+        var totalSteps = 4;
+
+        window.navigateStep = function(direction) {
+            var nextStep = currentStep + direction;
+            if (nextStep < 1 || nextStep > totalSteps) return;
+
+            // Validate current step before moving forward
+            if (direction > 0 && !validateStep(currentStep)) return;
+
+            // If going to review step, build review
+            if (nextStep === 4) buildReview();
+
+            goToStep(nextStep);
+        };
+
+        function goToStep(step) {
+            // Hide current
+            document.getElementById('step-' + currentStep).classList.remove('active');
+            // Show next
+            document.getElementById('step-' + step).classList.add('active');
+
+            currentStep = step;
+            updateStepper();
+            updateNavButtons();
+        }
+
+        function updateStepper() {
+            document.querySelectorAll('.step-circle').forEach(function(circle) {
+                var s = parseInt(circle.getAttribute('data-step'));
+                circle.classList.remove('active', 'completed');
+                if (s === currentStep) {
+                    circle.classList.add('active');
+                } else if (s < currentStep) {
+                    circle.classList.add('completed');
+                    circle.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="step-label">' + circle.querySelector('.step-label').textContent + '</span>';
+                } else {
+                    circle.innerHTML = s + '<span class="step-label">' + circle.querySelector('.step-label').textContent + '</span>';
+                }
+            });
+
+            // Update lines
+            for (var i = 1; i < totalSteps; i++) {
+                var line = document.getElementById('line-' + i);
+                if (line) {
+                    if (i < currentStep) {
+                        line.classList.add('filled');
+                    } else {
+                        line.classList.remove('filled');
+                    }
+                }
+            }
+        }
+
+        function updateNavButtons() {
+            var btnBack = document.getElementById('btnBack');
+            var btnNext = document.getElementById('btnNext');
+            var formNav = document.getElementById('formNav');
+
+            btnBack.style.visibility = currentStep > 1 ? 'visible' : 'hidden';
+
+            if (currentStep === totalSteps) {
+                btnNext.style.display = 'none';
+            } else {
+                btnNext.style.display = 'inline-flex';
+            }
+
+            // Hide nav on step 4 (submit is in the form body)
+            formNav.style.display = currentStep === totalSteps ? 'none' : 'flex';
+        }
+
+        // Allow clicking completed step circles to navigate back
+        document.querySelectorAll('.step-circle').forEach(function(circle) {
+            circle.addEventListener('click', function() {
+                var s = parseInt(this.getAttribute('data-step'));
+                if (s < currentStep) {
+                    goToStep(s);
+                }
+            });
+        });
+
+        // ---- VALIDATION ----
+        function validateStep(step) {
+            var valid = true;
+
+            if (step === 1) {
+                valid = validateField('first_name') && valid;
+                valid = validateField('last_name') && valid;
+                valid = validateField('email') && valid;
+            }
+
+            if (step === 2) {
+                var purchaseSelected = document.querySelector('input[name="00NdL000027TtrB"]:checked');
+                if (!purchaseSelected) {
+                    document.getElementById('err-purchase_interest').classList.add('visible');
+                    valid = false;
+                } else {
+                    document.getElementById('err-purchase_interest').classList.remove('visible');
+                }
+            }
+
+            return valid;
+        }
+
+        function validateField(fieldId) {
+            var field = document.getElementById(fieldId);
+            var error = document.getElementById('err-' + fieldId);
+            if (!field.value.trim()) {
+                field.classList.add('error');
+                if (error) error.classList.add('visible');
+                return false;
+            }
+            if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+                field.classList.add('error');
+                if (error) error.classList.add('visible');
+                return false;
+            }
+            field.classList.remove('error');
+            if (error) error.classList.remove('visible');
+            return true;
+        }
+
+        // Remove error on input
+        document.querySelectorAll('.field-group input, .field-group select').forEach(function(el) {
+            el.addEventListener('input', function() {
+                this.classList.remove('error');
+                var err = document.getElementById('err-' + this.id);
+                if (err) err.classList.remove('visible');
+            });
+        });
+
+        // Radio cards clear error
+        document.querySelectorAll('input[name="00NdL000027TtrB"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                document.getElementById('err-purchase_interest').classList.remove('visible');
+            });
+        });
+
+        // ---- NUMBER STEPPER ----
+        window.adjustStepper = function(id, delta) {
+            var input = document.getElementById(id);
+            var val = parseInt(input.value) + delta;
+            val = Math.max(1, Math.min(6, val));
+            input.value = val;
+        };
+
+        // ---- PRICE RANGE ----
+        var minPriceInput = document.getElementById('minPrice');
+        var maxPriceInput = document.getElementById('maxPrice');
+        var rangeFill = document.getElementById('rangeFill');
+
+        function updatePriceRange() {
+            var min = parseInt(minPriceInput.value);
+            var max = parseInt(maxPriceInput.value);
+
+            if (min > max) {
+                var temp = min;
+                minPriceInput.value = max;
+                maxPriceInput.value = temp;
+                min = max;
+                max = temp;
+            }
+
+            document.getElementById('minPriceDisplay').textContent = '\u00A3' + min.toLocaleString();
+            document.getElementById('maxPriceDisplay').textContent = '\u00A3' + max.toLocaleString();
+
+            var rangeMin = parseInt(minPriceInput.min);
+            var rangeMax = parseInt(minPriceInput.max);
+            var leftPercent = ((min - rangeMin) / (rangeMax - rangeMin)) * 100;
+            var rightPercent = ((max - rangeMin) / (rangeMax - rangeMin)) * 100;
+
+            rangeFill.style.left = leftPercent + '%';
+            rangeFill.style.width = (rightPercent - leftPercent) + '%';
+        }
+
+        minPriceInput.addEventListener('input', updatePriceRange);
+        maxPriceInput.addEventListener('input', updatePriceRange);
+        updatePriceRange();
+
+        // ---- PROPERTY TYPE PILLS (multiselect -> hidden input) ----
+        var pillCheckboxes = document.querySelectorAll('#propertyTypePills input[type="checkbox"]');
+        var propertyTypeHidden = document.getElementById('propertyTypeHidden');
+
+        pillCheckboxes.forEach(function(cb) {
+            cb.addEventListener('change', function() {
+                var selected = [];
+                pillCheckboxes.forEach(function(c) {
+                    if (c.checked) selected.push(c.value);
+                });
+                propertyTypeHidden.value = selected.join(';');
+            });
+        });
+
+        // ---- BUILD REVIEW ----
+        function buildReview() {
+            var html = '';
+
+            // Step 1 - About You
+            var step1Fields = [
+                { label: 'First Name', id: 'first_name' },
+                { label: 'Last Name', id: 'last_name' },
+                { label: 'Email', id: 'email' },
+                { label: 'Phone', id: 'phone' },
+                { label: 'Gender', id: 'gender' },
+                { label: 'Age Band', id: 'age_band' },
+                { label: 'Marital Status', id: 'marital_status' },
+                { label: 'Nationality', id: 'nationality' }
+            ];
+
+            html += buildReviewSection('About You', 1, step1Fields);
+
+            // Step 2 - Requirements
+            var purchaseRadio = document.querySelector('input[name="00NdL000027TtrB"]:checked');
+            var step2Items = [
+                { label: 'Interest', value: purchaseRadio ? purchaseRadio.value : '' },
+                { label: 'Property Type', value: propertyTypeHidden.value.replace(/;/g, ', ') },
+                { label: 'Bedrooms', value: document.getElementById('minBeds').value + ' - ' + document.getElementById('maxBeds').value },
+                { label: 'Price Range', value: document.getElementById('minPriceDisplay').textContent + ' - ' + document.getElementById('maxPriceDisplay').textContent },
+                { label: 'Preferred Tenure', value: document.getElementById('preferred_tenure').value },
+                { label: 'Move-In Date', value: document.getElementById('move_in_date').value },
+                { label: 'Garden Required', value: document.getElementById('garden_required').checked ? 'Yes' : 'No' }
+            ];
+
+            html += '<div class="review-section">';
+            html += '<div class="review-header"><h4>Property Requirements</h4><button type="button" class="review-edit" onclick="goToStep(2)">Edit</button></div>';
+            html += '<div class="review-grid">';
+            step2Items.forEach(function(item) {
+                if (item.value && item.value !== ' - ' && item.value !== 'No') {
+                    html += '<div class="review-item"><div class="review-item-label">' + item.label + '</div><div class="review-item-value">' + item.value + '</div></div>';
+                }
+            });
+            html += '</div></div>';
+
+            // Step 3 - Situation
+            var timeframeRadio = document.querySelector('input[name="00NdL000027VYAB"]:checked');
+            var step3Items = [
+                { label: 'Current Situation', id: 'current_situation' },
+                { label: 'Selling Position', id: 'selling_position' },
+                { label: 'Buying Position', id: 'buying_position' },
+                { label: 'City', id: 'city' },
+                { label: 'Source', id: 'source_detail' }
+            ];
+
+            html += '<div class="review-section">';
+            html += '<div class="review-header"><h4>Your Situation</h4><button type="button" class="review-edit" onclick="goToStep(3)">Edit</button></div>';
+            html += '<div class="review-grid">';
+
+            step3Items.forEach(function(item) {
+                var val = document.getElementById(item.id).value;
+                if (val) {
+                    html += '<div class="review-item"><div class="review-item-label">' + item.label + '</div><div class="review-item-value">' + escapeHtml(val) + '</div></div>';
+                }
+            });
+
+            if (document.getElementById('mortgage_pre_approved').checked) {
+                html += '<div class="review-item"><div class="review-item-label">Mortgage Pre-Approved</div><div class="review-item-value">Yes</div></div>';
+            }
+            if (document.getElementById('budget_confirmed').checked) {
+                html += '<div class="review-item"><div class="review-item-label">Budget Confirmed</div><div class="review-item-value">Yes</div></div>';
+            }
+            if (timeframeRadio) {
+                html += '<div class="review-item"><div class="review-item-label">Timeframe</div><div class="review-item-value">' + timeframeRadio.value + '</div></div>';
+            }
+
+            var notes = document.getElementById('description').value;
+            if (notes) {
+                html += '<div class="review-item" style="grid-column:1/-1"><div class="review-item-label">Additional Notes</div><div class="review-item-value">' + escapeHtml(notes) + '</div></div>';
+            }
+
+            html += '</div></div>';
+
+            document.getElementById('reviewContent').innerHTML = html;
+        }
+
+        function buildReviewSection(title, stepNum, fields) {
+            var html = '<div class="review-section">';
+            html += '<div class="review-header"><h4>' + title + '</h4><button type="button" class="review-edit" onclick="goToStep(' + stepNum + ')">Edit</button></div>';
+            html += '<div class="review-grid">';
+            fields.forEach(function(f) {
+                var el = document.getElementById(f.id);
+                var val = el.value;
+                if (val) {
+                    html += '<div class="review-item"><div class="review-item-label">' + f.label + '</div><div class="review-item-value">' + escapeHtml(val) + '</div></div>';
+                }
+            });
+            html += '</div></div>';
+            return html;
+        }
+
+        // Make goToStep available to review edit buttons
+        window.goToStep = goToStep;
+
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // ---- FORM SUBMIT ----
+        var form = document.getElementById('leadForm');
+        var submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Validate terms
+            if (!document.getElementById('termsCheck').checked) {
+                alert('Please agree to the Privacy Policy to continue.');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.classList.add('loading');
+
+            // Submit via fetch so we stay on the page (Web-to-Lead redirect doesn't work from file:// URLs)
+            // Must use URL-encoded body — Web-to-Lead rejects multipart/form-data
+            var formData = new FormData(form);
+            formData.set('retURL', 'https://meridianliving.co.uk');
+            var urlEncoded = new URLSearchParams(formData).toString();
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: urlEncoded,
+                mode: 'no-cors' // Web-to-Lead is cross-origin; no-cors still sends the data
+            }).then(function() {
+                setTimeout(function() { showSuccess(); }, 800);
+            }).catch(function() {
+                // Even on network error (e.g. CORS opaque response), the Lead was likely created
+                setTimeout(function() { showSuccess(); }, 800);
+            });
+        });
+
+        function showSuccess() {
+            document.getElementById('formContainer').querySelector('form').style.display = 'none';
+            document.getElementById('formContainer').querySelector('.stepper').style.display = 'none';
+            document.getElementById('successState').classList.add('active');
+            launchConfetti();
+
+            // Scroll to form section
+            document.getElementById('enquiry-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.resetForm = function() {
+            window.location.hash = '';
+            window.location.reload();
+        };
+
+        // ---- CONFETTI ----
+        function launchConfetti() {
+            var container = document.getElementById('confettiContainer');
+            var colors = ['#0A8A8A', '#0D6E6E', '#1aa3a3', '#4db8b8', '#E8A838', '#e6f5f5', '#80cccc'];
+
+            for (var i = 0; i < 50; i++) {
+                var piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.top = '-10px';
+                piece.style.width = (Math.random() * 8 + 6) + 'px';
+                piece.style.height = (Math.random() * 8 + 6) + 'px';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+
+                var duration = Math.random() * 1.5 + 1;
+                var delay = Math.random() * 0.5;
+                piece.style.animation = 'confettiFall ' + duration + 's ease-out ' + delay + 's forwards';
+
+                container.appendChild(piece);
+            }
+
+            // Cleanup after animation
+            setTimeout(function() { container.innerHTML = ''; }, 3000);
+        }
+
+        // Add confetti keyframes dynamically
+        var style = document.createElement('style');
+        style.textContent = '@keyframes confettiFall { 0% { opacity: 1; transform: translateY(0) rotate(0deg); } 100% { opacity: 0; transform: translateY(100vh) rotate(' + (Math.random() * 720 - 360) + 'deg); } }';
+        document.head.appendChild(style);
+
+    })();
+    </script>
+</body>
+</html>
