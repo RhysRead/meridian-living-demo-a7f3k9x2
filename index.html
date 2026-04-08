@@ -1968,6 +1968,8 @@
                 <!-- Country defaults to GB -->
                 <input type="hidden" name="country_code" value="GB">
                 <input type="hidden" name="lead_source" value="Web">
+                <!-- Record Type: mapped dynamically from Purchase Interest -->
+                <input type="hidden" name="recordType" id="recordType" value="012dL00000ClDiu">
 
                 <!-- STEP 1: About You -->
                 <div class="form-body">
@@ -2701,10 +2703,16 @@
             });
         });
 
-        // Radio cards clear error
+        // Radio cards clear error + set record type
+        var recordTypeMap = {
+            'Sale': '012dL00000ClDiu',          // Private - Sale
+            'Letting': '012dL00000ClDit',        // Private - Letting
+            'Shared Ownership': '012dL00000ClDis' // Housing Association - Sale
+        };
         document.querySelectorAll('input[name="00NdL000027TtrB"]').forEach(function(radio) {
             radio.addEventListener('change', function() {
                 document.getElementById('err-purchase_interest').classList.remove('visible');
+                document.getElementById('recordType').value = recordTypeMap[this.value] || '012dL00000ClDiu';
             });
         });
 
